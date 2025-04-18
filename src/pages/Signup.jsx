@@ -1,26 +1,25 @@
 import React from 'react'
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-
-function Login() {
+const Signup = () => {
 
     const navigate = useNavigate();
 
-    const [loginData, setLoginData] = useState({
+    const [signupData, setsignupData] = useState({
+        firstName: '',
+        lastName: '',
         email: '',
         password: ''
     });
     const [error, setError] = useState('');
 
-    const handleLogin = async () => {
+    const handlesignup = async () => {
         try {
-            const response = await fetch('http://localhost:4000/login', {
+            const response = await fetch('http://localhost:4000/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(loginData),
+                body: JSON.stringify(signupData),
             });
     
             const data = await response.json();
@@ -44,32 +43,42 @@ function Login() {
             [e.target.name]: e.target.value
         })
     }
-    
 
   return (
     <div>
+
         <h1>Welcome</h1>
         <p>Let's get productive!</p>
 
-        <form onSubmit={(e) => {
-            e.preventDefault();
-            setError('');
-            handleLogin()
-        }}>
+        <section>
             <h2>
-                Login 
+                Sign Up 
                 <br></br> 
-                <small>New user? click here to Signup!</small>
+                <small>Already Have an account? click here to Login!</small>
             </h2>
 
-            {error && <p className="text-red-500 mb-4" >{error}</p>}
+            <label htmlFor="firstName">First Name: </label>
+            <input type="text" 
+            name="firstName" 
+            placeholder="Enter your First Name" 
+            required
+            />
+            
+            <br></br>
+
+            <label htmlFor="lastName">Last Name: </label>
+            <input type="text" 
+            name="lastName" 
+            placeholder="Enter your Last Name" 
+            required
+            />
+
+            <br></br>
 
             <label htmlFor="email">Email: </label>
             <input type="email" 
             name="email" 
             placeholder="Enter your email" 
-            value={loginData.email} 
-            onChange={handleChange}    
             required
             />
 
@@ -78,9 +87,16 @@ function Login() {
             <label htmlFor="password">Password: </label>
             <input type="password" 
             name="password" 
-            placeholder="Enter your password"
-            value={loginData.password} 
-            onChange={handleChange} 
+            placeholder="Enter your password" 
+            required
+            />
+
+            <br></br>
+
+            <label htmlFor="password">Password: </label>
+            <input type="password" 
+            name="password" 
+            placeholder="Enter your password" 
             required
             />
 
@@ -89,10 +105,9 @@ function Login() {
 
             <input type="submit" 
             value="LogIn"/>
-
-        </form>      
+        </section>      
     </div>
   )
 }
 
-export default Login
+export default Signup
